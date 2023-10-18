@@ -82,7 +82,10 @@ def delete_cells(lines: list, cell_name_list: list) -> list:
         for line_num, line in enumerate(lines):
             if line.replace(' ', '').startswith(f"cell({cell_name})") and line.strip().endswith('{'):
                 cell_section = True
-                start_cell_line = line_num - 3
+                if "---------------------------------------------------------" in lines[line_num-3]:
+                    start_cell_line = line_num - 3
+                else:
+                    start_cell_line = line_num
             if ('}') in line and cell_section and open_curly_bracket == close_curly_bracket + 1:
                 cell_section = False
                 end_cell_line = line_num
